@@ -644,3 +644,33 @@ learnrhash::encoder_logic()
 learnrhash::encoder_ui()
 ```
 
+```{r context="setup"}
+fluidPage(
+    shinyjs::useShinyjs(),
+    mainPanel(
+          div(id = "form",
+            textInput("name", "Name", ""),
+            textInput("hash", "Hash", ""),
+            actionButton("submit", "Submit", class = "btn-primary"),
+            downloadButton("downloadData", "Download")
+          )
+        )
+    )
+```
+
+```{r context="server"}
+ observeEvent(input$submit,{
+        
+        name_id <<- input$name
+        hash_id <<- input$hash
+        
+        responses <<- data.frame("Name" = name_id, "Hash" = hash_id)
+        
+ })
+output$downloadData <- downloadHandler(
+      filename = "responses.rds",
+      content = function(file) {
+      write_rds(responses, file)
+    }
+  )
+```
