@@ -845,7 +845,7 @@ learnrhash::encoder_logic()
 
  observeEvent(input$submit,{
         hash_id <<- input$hash
-        responses <<- data.frame("Name" = name_id, "Hash" = hash_id)
+        responses <<- data.frame("Hash" = hash_id)
  })
 output$downloadData <- downloadHandler(
       filename = "responses.rds",
