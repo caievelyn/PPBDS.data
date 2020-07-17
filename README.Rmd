@@ -31,16 +31,9 @@ As this package is not released on CRAN, you must install it directly from GitHu
 remotes::install_github("davidkane9/PPBDS.data")
 ```
 
-<<<<<<< HEAD
-In order to run the tutorials, you must install the [learnrhash](https://github.com/rundel/learnrhash) package, created by Colin Rundel. To do so, run the following line:
-
-```r
-library(remotes)
-=======
 In order to run these tutorials, you must install the [learnrhash](https://github.com/rundel/learnrhash) package, created by Colin Rundel. 
 
 ```r
->>>>>>> master
 remotes::install_github("rundel/learnrhash")
 ```
 
