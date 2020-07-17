@@ -1,5 +1,9 @@
 
+<<<<<<< HEAD
 <!-- README is generated from README.Rmd, edit ONLY this file if needed. But, after you edit it, you need to knit it in order to create the new README.md, which is the thing which is actually used. -->
+=======
+<!-- README is generated from README.Rmd, edit ONLY this file if needed. But, after you edit it, you NEED TO KNIT IT BY HAND in order to create the new README.md, which is the thing which is actually used. -->
+>>>>>>> master
 
 # Data for *Preceptor’s Primer for Bayesian Data Science*
 
@@ -17,16 +21,23 @@ As this package is not released on CRAN, you must install it directly
 from GitHub.
 
 ``` r
-library(remotes)
 remotes::install_github("davidkane9/PPBDS.data")
 ```
 
+<<<<<<< HEAD
 In order to run the tutorials, you must install the
 [learnrhash](https://github.com/rundel/learnrhash) package, created by
 Colin Rundel. To do so, run the following line:
 
 ``` r
 library(remotes)
+=======
+In order to run these tutorials, you must install the
+[learnrhash](https://github.com/rundel/learnrhash) package, created by
+Colin Rundel.
+
+``` r
+>>>>>>> master
 remotes::install_github("rundel/learnrhash")
 ```
 
@@ -35,8 +46,12 @@ remotes::install_github("rundel/learnrhash")
 After installing the package, it loads as any package should.
 
 ``` r
+<<<<<<< HEAD
 library(tidyverse) # the tidyverse is your new best friend
 #> Warning: package 'tidyverse' was built under R version 4.0.2
+=======
+library(tidyverse) 
+>>>>>>> master
 library(PPBDS.data)
 
 qscores
