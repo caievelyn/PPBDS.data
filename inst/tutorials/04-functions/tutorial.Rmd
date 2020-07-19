@@ -41,14 +41,6 @@ Functions are the verbs of R. When you do something in R, you do it by running a
 
 This last one is an alternative way to call the function `'+'(1, 2)`. In R, even things that do not look like functions are functions. 
 
-###  
-
-But what is a function? 
-
-A function is simply a piece of code that is packaged in a way that makes it easy to reuse.
-
-This short tutorial will show you how R functions are packaged and how you can work with R functions. It is a pre-requisite for the next tutorial, which will show you how to write your own R functions. Let's begin!
-
 ## Parts of a function
 
 ###  
@@ -80,17 +72,9 @@ Let's use these helpers to see how the `xor` function works. `xor` is a logical 
 body(xor)
 ```
 
-```{r xor-body-check}
-"xor contains one line of code in its body (you can ignore the braces). This isn't always the case. A function can have as many lines of code as it needs in its body. If you don't believe me check out the body for lm. R will run the code in a function's code body each time you call the function; but as you can see, the code in a function's body may not be self-contained. What is x? What is y? Click Continue to find out."
-```
-
 ###  
 
-`xor` contains one line of code in its body (you can ignore the braces). This isn't always the case. A function can have as many lines of code as it needs in its body. For example, `as.list.data.frame` has three lines (most R functions have much more).
-
-```{r}
-body(as.list.data.frame)
-```
+`xor` contains one line of code in its body (you can ignore the braces). This isn't always the case. A function can have as many lines of code as it needs in its body. 
 
 When a function contains more than one line of code in its body, R will run the entire body and return the result of the **last** line.
 
@@ -117,10 +101,6 @@ Often times, a function will need one or more named values to do its job. These 
 
 ```{r xor-formals-solution}
 formals(xor)
-```
-
-```{r xor-formals-check}
-"A function can have zero, one, or many many formal arguments. Do not be distracted by the $'s that appear before the argument names. Those are an artifact of how R displays lists."
 ```
 
 ### environment()
