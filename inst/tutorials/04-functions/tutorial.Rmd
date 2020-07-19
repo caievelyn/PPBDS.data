@@ -314,10 +314,6 @@ question("",
          allow_retry = TRUE)
 ```
 
-### Congratulations!
-
-You have finished the tutorial.
-
 ## When to write a function
 
 ###  
@@ -673,10 +669,6 @@ To do so, highlight a section of code in the scripts pane. Then navigate to **Co
 knitr::include_graphics("images/extract.png")
 ```
 
-## Practice
-
-Congratulations on finishing the tutorial. Before you go, complete the following exercises to cement your skills!
-
 ### Exercise 1
 
 ```{r quiz-2a, echo = FALSE}
@@ -1003,29 +995,6 @@ question("What will `foodoo(a = 1, b = 2, c = 3)` return?",
           answer("[1] 2 3 with the names b c above the values", correct = TRUE, message = "Remember that `...` only captures _unmatched_ values. Now that `a` is a formal argument, `a = 1` will be matched to it, leaving `b = 2` and `c = 3` to be captured and passed on."),
          answer("An error."),
          allow_retry = TRUE)
-```
-
-## Tips
-
-###   
-
-Congratulations! You've finished the quiz and know a lot about how R parses arguments. As a reward, here are two useful things that you can do with arguments in the RStudio IDE:
-
-
-###  
-
-After you've written a function name followed by an opening parenthesis, look for a small yellow window to pop up that tells you the names, order, and default values of the function's arguments. This can be handy when you are not very familiar with the function.
-
-```{r echo=FALSE, out.width = "100%"}
-# knitr::include_graphics("images/popup.png")
-```
-
-###  
-
-After you've written a function name followed by an opening parenthesis, press tab to invoke RStudio's tab completion. RStudio will open a pop up menu that contains the names of the function's arguments. Use the up and down arrow keys to navigate to a name, and then press enter to insert the name into your code. This can save you a lot of time once you get a feel for it.
-
-```{r echo=FALSE, out.width = "100%"}
-# knitr::include_graphics("images/tab-completion.png")
 ```
 
 ## Environments
@@ -1898,10 +1867,6 @@ question("What will this code return?",
          allow_retry = TRUE)
 ```
 
-### Congratulations!
-
-You now know how to use `if` and `else` in your code. Let's look at another way to control flow in R.
-
 ## return() and stop()
 
 ###  
@@ -2139,15 +2104,6 @@ If things go wrong, `stopifnot()` will help you see what you need to fix as soon
 
 1. Your code will run until it triggers a (perhaps unhelpful) error message
 1. Your code may not trigger an error message, but return an incorrect result that you will think is true. This would very bad.
-
-###  
-
-Congratulations! You know two techniques of control flow, how to:
-
-1. Run specific code in specific cases
-1. Stop execution early
-
-In the Advanced Control Flow tutorial, you'll learn how to combine logical tests in an if statement as well as how to write if statements that work with vectors, which is a prerequisite if you want to write vectorized functions.
 
 ## && and ||
 
@@ -2605,19 +2561,6 @@ clean <- function(x) {
 'And if you noticed that a vector of real numbers would never contain ".", "", and "Nan" because they are strings, you are of course right. Thanks for playing along with the charade.'
 ```
 
-### Congratulations!
-
-You've learned how to alter the control flow of your functions with:
-
-* `if`
-* `else`
-* `return()`
-* `stop()`
-* `stopifnot()`
-* `ifelse()`
-
-Not only that, you tackled two advanced methods: dplyr's `if_else()` and dplyr's `case_when()`.
-
 ## repeat
 
 ###  
@@ -2851,10 +2794,6 @@ count_down <- function(x) {
 ```{r}
 count_down(10)
 ```
-
-Congratulations! 
-
-A loop executes a piece of code multiple times, perhaps allowing changes to accumulate as it goes.
 
 ###  
 
@@ -3224,10 +3163,6 @@ question("Will this loop run forever?",
          answer("Yes", correct = TRUE, message = "n will never increment to two  because R will skip over the end of the loop each time it encounters next. Be thoughtful when you write loops!"),
          allow_retry = TRUE)
 ```
-
-###  
-
-Congratulations! You've learned how to use all of R's loop functions! To be a loop master, click on the button to learn when to use loops in R and when not to.
 
 ## When to use loops
 
