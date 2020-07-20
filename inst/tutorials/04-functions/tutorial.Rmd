@@ -16,6 +16,7 @@ library(PPBDS.data)
 library(learnr)
 library(learnrhash)
 library(shiny)
+library(gapminder)
 knitr::opts_chunk$set(echo = FALSE, message = FALSE)
 ```
 
@@ -63,6 +64,24 @@ quiz(caption = "Concept Check: Map functions and list-columns",
 )
 ```
 
+List-Columns
+
+### 
+
+Create a list-column called `col_2` using `str_split()` that splits the phrases into "Government", "Data Science", "Preceptor", and "Primer".
+
+```{r exercise-0, exercise = TRUE}
+tibble(col_1 = c("Government and Data Science", "Preceptor and Primer")) %>%
+  mutate(col_2 = ...) %>%
+  str()
+```
+
+```{r exercise-0-hint}
+tibble(col_1 = c("Government and Data Science", "Preceptor and Primer")) %>%
+  mutate(col_2 = str_split(..., " and ")) %>%
+  str()
+```
+
 Explore the `ChickWeight` dataset using `skim()`.
 
 ```{r exercise-1, exercise = TRUE}
@@ -73,7 +92,7 @@ Explore the `ChickWeight` dataset using `skim()`.
 skim(...)
 ```
 
-Create a list-column of weights called `weight_groups`, grouping by `Diet` and `Time`. Save this list-column in a new dataframe called `x`.
+Create a list-column of weights using `mutate()`called `weight_groups`, grouping by `Diet` and `Time`. Save this list-column in a new dataframe called `x`.
 
 ```{r exercise-2, exercise = TRUE}
 x <- ChickWeight %>%
@@ -3414,7 +3433,17 @@ Create a list-column of monthly temperatures called `monthly_temp`, grouping by 
 #   mutate(monthly_temp = list(...))
 ```
 
-Use a `map_*` function to convert all of the temperatures in `monthly_temp` from Fahrenheit to Celsius, creating a new variable `temp_celsius`. Hint: The formula to convert Fahrenheit to Celsius is `(. - 32) * 5/9`.
+```{r quiz-4}
+quiz(caption = "mutate(celsius = map(fahrenheit, ...)",
+  question("Which of the following possibilities for filling in the blank is syntactically correct and converts from Fahrenheit to Celsius?",
+           answer("(. - 32) * 5/9)"),
+           answer("- 32 * 5/9"),
+           answer("~ (. - 32) * 5/9)", correct = TRUE),
+           answer("~ (fahrenheit - 32) * 5/9)"))
+)
+```
+
+Use a `map_*` function to convert all of the temperatures in `monthly_temp` from Fahrenheit to Celsius, creating a new variable `temp_celsius`. Hint: Use the formula from the quiz above!
 
 ```{r exercise-3a-setup}
 y <- airquality %>%
@@ -3423,16 +3452,91 @@ y <- airquality %>%
 ```
 
 ```{r exercise-3a, exercise = TRUE}
-y %>%
+y <- y %>%
   mutate(temp_celsius = map(...))
 ```
 
 ```{r exercise-3a-hint}
-y %>%
+y <- y %>%
   mutate(temp_celsius = map(monthly_temp, ...))
 ```
 
+Oops! The scientists made a mistake in which all of the temperatures were misrecorded. For temperatures recorded at or below 20 degrees Celsius, the true temperature is actually 1 degree Celsius lower. For temperatures recorded as higher than 20 degrees Celsius, the true temperature is actually 3 degrees Celsius higher.
 
+Write an anonymous function using base R that rectifies the scientists' mistake using `case_when()`.
+
+```{r exercise-4a, exercise=TRUE}
+function(x) 
+  case_when(...)
+```
+
+```{r exercise-4a-solution}
+function(x) 
+  case_when(x <= 20 ~ x - 1,
+            x > 20 ~ x + 3)
+```
+
+Now use this function along with `map()`, swapping out the base R for the `~` in the `map()` argument.
+
+```{r setup5a}
+y <- y %>%
+  mutate(temp_celsius = map(monthly_temp, ~ (. - 32)* 5/9))
+```
+
+```{r exercise-5a, exercise=TRUE, exercise.setup = "setup5a"}
+y <- y %>%
+  mutate(temp_celsius = map(temp_celsius, ~ ...))
+```
+
+```{r exercise-5a-hint}
+y %>%
+  mutate(temp_celsius = map(temp_celsius, ~ case_when(...)))
+```
+
+Now let's get a sense of the "corrected" data. Sort the temperatures from coldest to hottest each month.
+
+```{r exercise-6a, exercise=TRUE, exercise.setup = "setup5a"}
+
+```
+
+```{r exercise-6a-hint}
+y %>%
+  mutate(temp_celsius = map(temp_celsius, ~ sort(case_when(...))))
+```
+
+```{r quiz-5}
+quiz(
+  question("What is the coldest temperature in July?",
+           answer("25.78 degrees Celsius", correct = TRUE),
+           answer("30.33 degrees Celsius"),
+           answer("12.33 degrees Celsius"),
+           answer("26.33 degrees Celsius"))
+)
+```
+
+Let's reference the `gapminder` dataset. First, create a list-column named `gdpPercap_yearly` that lists the `gdpPercap` per year grouping by continent.
+
+```{r exercise-7a, exercise=TRUE}
+
+```
+
+```{r exercise-7a-hint}
+gapminder %>%
+  group_by(year, continent) %>%
+  mutate(gdpPercap_yearly = list(...))
+```
+
+Now, build upon the previous question's code and, instead of taking the `gdpPercap`, calculate the *total wealth of the country in that year*. Save this as a new dataframe named `wealth`.
+
+```{r exercise-8a, exercise=TRUE}
+
+```
+
+```{r exercise-8a-hint}
+wealth <- gapminder %>%
+  group_by(year, continent) %>%
+  mutate(gdpPercap_yearly = list(gdpPercap * ...))
+```
 
 ## Submit
 
