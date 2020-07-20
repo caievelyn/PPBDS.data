@@ -19,7 +19,7 @@ library(shiny)
 knitr::opts_chunk$set(echo = FALSE, message = FALSE)
 ```
 
-## Functions
+## Using map_* functions to create list columns
 
 ```{r name, echo=FALSE}
 question_text(
@@ -30,6 +30,153 @@ question_text(
   allow_retry = TRUE
 )
 ```
+
+<!-- EC: Insert one question about lists -->
+
+```{r quiz-1}
+quiz(caption = "Concept Check: Map functions and list-columns",
+  question("What is a list-column?",
+           answer("A list in which there is only one variable, and therefore only one \"column\""),
+           answer("A list which only contains variable, or \"column\" names"),
+           answer("A column of your data whose data type is a list rather than a character, numeric, integer, complex, or logical", message = "Remember, a list is not a data type, but rather a data structure! Other data structures include data frames and factors." ),
+           answer("A column of your data which is a list rather than a vector", correct = TRUE),
+           allow_retry = TRUE
+  ),
+  question("What does map_dbl() mean?",
+           answer("The input to the map_dbl() function must be numeric", correct=TRUE),
+           answer("The output of the map_dbl() function will be numeric"),
+           allow_retry = TRUE
+  ),
+  question("How are map_* functions different than mutate()?",
+           answer("They can take list inputs and iterate over each element of a list", correct = TRUE),
+           answer("They are the same, except you can specify what output data type you'd like to have"),
+           answer("They can apply functions to their inputs, whereas mutate() cannot"),
+           answer("They can apply custom and anonymous functions to their inputs, whereas mutate() can only apply built-in functions to their inputs")),
+   question("Which of the following is correct about map_* functions?",
+           answer("You do not need the parentheses when specifying a function for the map_* function to apply. Ex: map(data, mean)", correct = TRUE),
+           answer("You do need the parentheses when specifying a function for the map_* function to apply. Ex: map(data, mean())"),
+           answer("You cannot have a list with NAs, or else using the map_* function will return an error", message = "This is not necessarily true. Hint: What does the \"...\" mean in map_*? Refer to the next question!")),
+  question("What does the \"...\" argument mean in a map_* function?",
+           answer("Nothing. R functions commonly have an auxiliary \"...\" argument"),
+           answer("It means that the map_* function will take in its default arguments"),
+           answer("It means that you can specify additional arguments to be passed into the given function", correct = TRUE))
+)
+```
+
+Explore the `ChickWeight` dataset using `skim()`.
+
+```{r exercise-1, exercise = TRUE}
+
+```
+
+```{r exercise-1-hint}
+skim(...)
+```
+
+Create a list-column of weights called `weight_groups`, grouping by `Diet` and `Time`. Save this list-column in a new dataframe called `x`.
+
+```{r exercise-2, exercise = TRUE}
+x <- ChickWeight %>%
+  group_by(Diet, Time) %>%
+  mutate(...)
+```
+
+```{r exercise-2-hint}
+x <- ChickWeight %>%
+  group_by(Diet, Time) %>%
+  mutate(weight_groups = list(...))
+```
+
+Use a `map_*` function to find the mean weight per row in the new list-column. Name this new column `mean_weight`.
+
+```{r setup3}
+x <- ChickWeight %>%
+  group_by(Diet, Time) %>%
+  mutate(weight_groups = list(weight))
+```
+
+```{r exercise-3, exercise = TRUE, exercise.setup = "setup3"}
+x <- x %>%
+  mutate(mean_weight = map_dbl(...))
+```
+
+```{r exercise-3-hint}
+x <- x %>%
+  mutate(mean_weight = map_dbl(weight_groups, ...))
+```
+
+Now let's use `map_dbl()` to round each `mean_weight` to the nearest integer. Name this new column `rounded_mean`. 
+
+```{r setup4, exercise.setup = "setup3"}
+x <- x %>%
+  mutate(mean_weight = map_dbl(weight_groups, mean))
+```
+
+```{r exercise-4, exercise = TRUE, exercise.setup = "setup4"}
+x %>%
+  mutate(rounded_mean = map_dbl(...))
+```
+
+```{r exercise-4-hint}
+x %>%
+  mutate(rounded_mean = map_dbl(mean_weight, ...))
+```
+
+```{r quiz-2}
+quiz(
+  question("What is the rounded mean weight for chicks given Diet 2 for 4 days (corresponding to a value of 4 in Time)?",
+           answer("56 grams"),
+           answer("41 grams"),
+           answer("60 grams", correct = TRUE),
+           answer("52 grams"),
+           allow_retry = TRUE),
+  question("What would have happened if we had used map() instead of map_dbl() above?",
+           answer("The input would have looked for a list, rather than data of type double"),
+           answer("Nothing. Map() is just the general function for all map functions"),
+           answer("The output would have been a list, not a vector of type double", correct = TRUE, message = "Exactly! Try it out for yourself. This is why the world of map_* functions is so convenient. Functions such as unnest() can extract from list-columns, but there is no need to do so in this case."))
+  )
+```
+
+Now let's use a `map_*` function to find the highest weight per `Diet` + `Time` combination. First, let's sort from highest to lowest weight and create a new column named `sorted_weight`.
+
+```{r exercise-5, exercise = TRUE, exercise.setup = "setup4"}
+x <- x %>%
+  mutate(sorted_weight = map(weight_groups, ...))
+```
+
+```{r exercise-5-hint}
+x <- x %>%
+  mutate(sorted_weight = map(weight_groups, ..., decreasing = TRUE))
+```
+
+Next, return the highest weight in each row of the `sorted_weight` list-column in a new column named `heaviest`.
+
+```{r setup6}
+x <- x %>%
+  mutate(sorted_weight = map(weight_groups, sort, decreasing = TRUE))
+```
+
+```{r exercise-6, exercise = TRUE, exercise.setup = "setup6"}
+x %>%
+  mutate(heaviest = map_dbl(...))
+```
+
+```{r exercise-6-hint}
+x %>%
+  mutate(heaviest = map_dbl(...,  ~ .[1]))
+```
+
+```{r quiz-3}
+quiz(
+  question("What is the heaviest weight for a 16-day old chick on Diet 3?",
+           answer("227 grams"),
+           answer("287 grams", correct = TRUE),
+           answer("222 grams"),
+           answer("332 grams"))
+)
+```
+
+## Functions
 
 ###  
 
@@ -3241,6 +3388,50 @@ Or you could use a map function from the purrr package.
 It is all up to you. The moral is that loops are not an all purpose tool in R. They are best reserved for problems that are not easy to solve with a vectorized function.
 
 To learn more about when you definitely _should_ use a loop, check out Hadley Wickham's three suggestions in [Advanced R](http://adv-r.had.co.nz/Functionals.html#functionals-not) (be aware, it is advanced).
+
+## Using map_* functions and custom/anonymous functions to create list-columns
+
+
+Explore the `airquality` dataset using `skim()`.
+
+```{r exercise-1a, exercise = TRUE}
+
+```
+
+```{r exercise-1a-hint}
+skim(...)
+```
+
+Create a list-column of monthly temperatures called `monthly_temp`, grouping by `Month`. Save this new list-column in a dataframe called `y`.
+
+```{r exercise-2a, exercise = TRUE}
+
+```
+
+```{r exercise-2a-hint}
+# y <- airquality %>%
+#   group_by(Month) %>%
+#   mutate(monthly_temp = list(...))
+```
+
+Use a `map_*` function to convert all of the temperatures in `monthly_temp` from Fahrenheit to Celsius, creating a new variable `temp_celsius`. Hint: The formula to convert Fahrenheit to Celsius is `(. - 32) * 5/9`.
+
+```{r exercise-3a-setup}
+y <- airquality %>%
+  group_by(Month) %>%
+  mutate(monthly_temp = list(Temp))
+```
+
+```{r exercise-3a, exercise = TRUE}
+y %>%
+  mutate(temp_celsius = map(...))
+```
+
+```{r exercise-3a-hint}
+y %>%
+  mutate(temp_celsius = map(monthly_temp, ...))
+```
+
 
 
 ## Submit
