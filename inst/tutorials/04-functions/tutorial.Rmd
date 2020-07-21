@@ -35,7 +35,7 @@ question_text(
 ```
 
 ```{r firstquiz}
-quiz(
+quiz(caption = "Concept Check: Function Basics",
   question("Select all that apply: Which of the following operations requires running a function in R?",
            answer("Taking a log value", correct = TRUE),
            answer("Fitting a linear model", correct = TRUE),
@@ -54,7 +54,11 @@ quiz(
      allow_retry = TRUE, 
      type = "multiple", 
      incorrect = "Did you check ALL that applied?",
-     correct = "Good job! You can avoid these outcomes by turning your code into a function. A good rule is to turn a piece of code into a function whenever you find yourself re-using the code more than three times."))
+     correct = "Good job! You can avoid these outcomes by turning your code into a function. A good rule is to turn a piece of code into a function whenever you find yourself re-using the code more than three times."),
+    question("Which of these will run the `Sys.time` function?",
+         answer("Sys.time"),
+         answer("Sys.time()", correct = TRUE, 
+         message = "The open and closed parentheses tell R to execute the code in the code body of the function stored in the object names Sys.time.")))
 ```
 
 Find the code body of `foo`. Use the helper function `body()`.
@@ -122,6 +126,8 @@ tibble(col_1 = c("Government and Data Science", "Preceptor and Primer")) %>%
   mutate(col_2 = str_split(..., " and ")) %>%
   str()
 ```
+
+###
 
 Explore the `ChickWeight` dataset using `skim()`.
 
@@ -197,6 +203,8 @@ quiz(
   )
 ```
 
+###
+
 Now let's use a `map_*` function to find the highest weight per `Diet` + `Time` combination. First, let's sort from highest to lowest weight and create a new column named `sorted_weight`.
 
 ```{r exercise-5, exercise = TRUE, exercise.setup = "setup4"}
@@ -236,14 +244,137 @@ quiz(
 )
 ```
 
+###
+
+Let's reference the `gapminder` dataset. First, create a list-column named `gdpPercap_yearly` that lists the `gdpPercap` per year grouping by continent.
+
+```{r exercise-7a, exercise=TRUE}
+
+```
+
+```{r exercise-7a-hint}
+gapminder %>%
+  group_by(year, continent) %>%
+  mutate(gdpPercap_yearly = list(...))
+```
+
+###
+
+Now, build upon the previous question's code and, instead of taking the `gdpPercap`, calculate the *annual GDP of the country* in a new variable called `annual_gdp`.
+
+```{r exercise-8a, exercise=TRUE}
+gapminder %>%
+  group_by(year, continent) %>%
+  mutate(annual_gdp = list(...))
+```
+
+```{r exercise-8a-hint}
+gapminder %>%
+  group_by(year, continent) %>%
+  mutate(annual_gdp = list(gdpPercap * ...))
+```
+
+###
+
+What was the lowest GDP in each `year` x `continent` category? Create a new column named `lowest` of data type "double" that contains the lowest GDP per year/continent. Pay attention to the `map_*` function you use.
+
+```{r exercise-9a, exercise=TRUE}
+gapminder %>%
+  group_by(year, continent) %>%
+  mutate(annual_gdp = list(gdpPercap * pop)) %>%
+  mutate(lowest = ...)
+```
+
+```{r exercise-9a-hint}
+gapminder %>%
+  group_by(year, continent) %>%
+  mutate(annual_gdp = list(gdpPercap * pop)) %>%
+  mutate(lowest = map_dbl(annual_gdp, ...))
+```
+
+###
+
+What was the lowest GDP for a country in the Americas in 1992?
+
+```{r exercise-10a, exercise = TRUE}
+gapminder %>%
+  group_by(year, continent) %>%
+  mutate(annual_gdp = list(gdpPercap * pop)) %>%
+  mutate(lowest = map_dbl(annual_gdp, min))
+```
+
+```{r exercise-10a-hint, exercise = TRUE}
+gapminder %>%
+  group_by(year, continent) %>%
+  mutate(annual_gdp = list(gdpPercap * pop)) %>%
+  mutate(lowest = map_dbl(annual_gdp, min)) %>%
+  filter(...)
+```
+
+```{r wealthmin}
+quiz(
+  question("What was the lowest GDP for a South American country in 1992?",
+         answer("Choose a name, then type <- function(){", message = "You shouldn't type function() until you have code that works with a real test case."),
+         answer("$8,719,537,248", correct = TRUE),
+         answer("$4,353,422,616"),
+         answer("$6,567,086,330"),
+         answer("$4,129,281,353"),
+         allow_retry = TRUE,
+         random_answer_order = TRUE))
+```
+
+###
+
+Now let's examine what the highest GDP was per year/continent. Create a new column named `highest` of data type "double" that contains the lowest GDP per year/continent. Pay attention to the `map_*` function you use.
+
+```{r exercise-11a, exercise=TRUE}
+gapminder %>%
+  group_by(year, continent) %>%
+  mutate(annual_gdp = list(gdpPercap * pop)) %>%
+  mutate(highest = ...)
+```
+
+```{r exercise-11a-hint}
+gapminder %>%
+  group_by(year, continent) %>%
+  mutate(annual_gdp = list(gdpPercap * pop)) %>%
+  mutate(highest = map_dbl(annual_gdp, ...))
+```
+
+###
+
+What was the highest GDP for an African country in 2007?
+
+```{r exercise-12a, exercise = TRUE}
+gapminder %>%
+  group_by(year, continent) %>%
+  mutate(annual_gdp = list(gdpPercap * pop)) %>%
+  mutate(highest = map_dbl(annual_gdp, max))
+```
+
+```{r exercise-12a-hint}
+gapminder %>%
+  group_by(year, continent) %>%
+  mutate(annual_gdp = list(gdpPercap * pop)) %>%
+  mutate(highest = map_dbl(annual_gdp, max)) %>%
+  filter(...)
+```
+
+```{r wealthmax}
+quiz(
+  question("What was the highest GDP for an African country in 2007?",
+         answer("$2,204,242,423,150"),
+         answer("$447,970,942,205", correct = TRUE),
+         answer("$6,539,500,929,092"),
+         answer("$67,406,033,606"),
+         allow_retry = TRUE,
+         random_answer_order = TRUE))
+```
+
 ## Built-In Functions and Custom Functions
 
 ```{r builtinfunctions}
 quiz(
-  question("Which of these will run the `Sys.time` function?",
-         answer("Sys.time"),
-         answer("Sys.time()", correct = TRUE, 
-         message = "The open and closed parentheses tell R to execute the code in the code body of the function stored in the object names Sys.time.")),
   question("What is the first step of writing a function?",
          answer("Choose a name, then type <- function(){", message = "You shouldn't type function() until you have code that works with a real test case."),
          answer("Create a real R object (or set of objects)", correct = TRUE, message = "You can then use the object to test your code."),
@@ -1088,30 +1219,6 @@ quiz(
            answer("12.33 degrees Celsius"),
            answer("26.33 degrees Celsius"))
 )
-```
-
-Let's reference the `gapminder` dataset. First, create a list-column named `gdpPercap_yearly` that lists the `gdpPercap` per year grouping by continent.
-
-```{r exercise-7a, exercise=TRUE}
-
-```
-
-```{r exercise-7a-hint}
-gapminder %>%
-  group_by(year, continent) %>%
-  mutate(gdpPercap_yearly = list(...))
-```
-
-Now, build upon the previous question's code and, instead of taking the `gdpPercap`, calculate the *total wealth of the country in that year*. Save this as a new dataframe named `wealth`.
-
-```{r exercise-8a, exercise=TRUE}
-
-```
-
-```{r exercise-8a-hint}
-wealth <- gapminder %>%
-  group_by(year, continent) %>%
-  mutate(gdpPercap_yearly = list(gdpPercap * ...))
 ```
 
 ## Submit
