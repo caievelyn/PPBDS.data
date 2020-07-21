@@ -1194,9 +1194,155 @@ quiz(
 
 ###
 
-Let's say you are trying to create a function, `flip_coins()`, that takes an input `n` of the number of coins to flip and adds up the number of Heads and Tails.
+Let's say you are trying to create a function, `coin_flip()`, that takes an input `n` of the number of times to flip a coin and adds up the number of Tails.
 
-Let's start by creating a minimally viable function that flips one coin once and prints out `r "H"` or `r "T"`
+Let's start by creating a minimally viable function called `starter_coin()` that flips one coin once and prints out `H` or `T`. Remember: You can paste vectors as an argument into `sample()`!
+
+```{r coin1, exercise=TRUE}
+
+```
+
+```{r coin1-hint}
+starter_coin <- function() sample(c("H", "T"), ...)
+```
+
+###
+
+Now let's take it up a notch and add in a formal argument `n` that specifies the number of times to flip the coin.
+
+```{r coin2, exercise=TRUE}
+
+```
+
+```{r coin2-hint}
+starter_coin <- function(n) sample(c("H", "T"), n, replace = ...)
+```
+
+###
+
+Add in a sensible `stopifnot()` to your function that checks whether the input `n` is numeric.
+
+```{r coin3, exercise=TRUE}
+
+```
+
+```{r coin3-hint}
+starter_coin <- function(n) {
+  stopifnot(is.numeric(...))
+  sample(c("H", "T"), n, replace = TRUE)
+}
+```
+
+###
+
+Great! Now we should be able to create `coin_flip()`, which counts the number of Tails for `n` flips. Set the default value of `n` to 1.
+
+```{r coin4, exercise=TRUE}
+coin_flip <- function(n = 1) {
+  ...
+}
+```
+
+```{r coin4-hint-1}
+# Use the code from starter_coin() and sum().
+```
+
+```{r coin4-hint-2}
+coin_flip <- function(n = 1) {
+  stopifnot(is.numeric(n))
+  sum(sample(c("H", "T"), n, replace = TRUE) == ...)
+}
+```
+
+###
+
+Now let's create a function called `five_flips` that counts how many Tails occur in five coin flips, or the equivalent of `coin_flip(5)`, but calls it `n` times.
+* Set the default value of `n` separate flips to 1.
+* Use a `map_*` function to apply the `rep()` function to `coin_flip()` `n` times.
+
+```{r coin5, exercise=TRUE}
+five_flips <- function(n = 1) {
+  ...
+}
+```
+
+```{r coin5-hint-1}
+# The map function you are looking for is map_int().
+```
+
+```{r coin5-hint-2}
+# rep(x,n) means that you are flipping x coins n times.
+```
+
+```{r coin5-hint-3}
+five_flips <- function(n = 1) {
+  stopifnot(is.numeric(n))
+  map_int(rep(5, n), ...)
+}
+```
+
+###
+
+Create a tibble named `x` with one variable: `flips`. `flips` is a list column of 10 observations, each element of which is result of flipping 5 coins 10 times. 
+
+```{r coin-quiz}
+quiz(
+  question("Select all that apply: Which of the following is equivalent to flipping 5 coins 10 times?",
+           answer("five_flips(10)", correct = TRUE, message = "Use this function for the next exercise!"),
+           answer("five_flips(5, 10)"),
+           answer("five_flips(5)"),
+           allow_retry = TRUE,
+           random_answer_order = TRUE))
+```
+
+Create `x` as specified above. Make sure to use the correct `map_*` function.
+
+```{r coin7, exercise=TRUE}
+x <- tibble(flips = ...)
+```
+
+```{r coin7-hint}
+x <- tibble(flips = map(rep(10, 10), ...))
+```
+
+###
+
+Now we are interested in finding the `mean()`, `min()`, and `max()` of each row. Use the appropriate `map_*` functions to create new columns named `average`, `minimum`, and `maximum`, using the aforementioned functions respectively.
+
+```{r coinsetup}
+x <- tibble(flips = map(rep(10, 10), five_flips))
+```
+
+```{r coin8, exercise=TRUE, exercise.setup = "coinsetup}
+x %>%
+  mutate(...)
+```
+
+```{r coin8-hint}
+x %>%
+  mutate(average = map_dbl(...),
+         minimum = map_dbl(...),
+         maximum = map_dbl(...))
+```
+
+###
+
+That seems kind of clunky to create three new columns. What if I wanted to return a single new list-column named `descriptive_stats` that contained a list of the mean, minimum, and maximum values? Time to write a function!
+
+```{r coin8-hint}
+stat_ops <- function(x) {
+  a <- mean(x)
+  b <- min(x)
+  c <- max(x)
+  return(a,b,c)
+}
+```
+
+
+```{r coin8-hint}
+x %>%
+  mutate(descriptive_stats = map(flips, stat_ops))
+```
 
 ## Submit
 
