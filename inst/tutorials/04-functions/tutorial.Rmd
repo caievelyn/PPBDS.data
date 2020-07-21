@@ -74,11 +74,7 @@ foo <- function() {
 ```
 
 ```{r foo-hint}
-<<<<<<< HEAD
 # body(...)
-=======
-body(...)
->>>>>>> master
 ```
 
 ## Using map_* functions to create list columns
@@ -762,7 +758,6 @@ quiz(
 
 ### Checks using `stopifnot()`, and `stop()`
 
-<<<<<<< HEAD
 <!-- EC: Need more stopifnot() questions -->
 
 ```{r echo=TRUE, eval=FALSE}
@@ -772,8 +767,6 @@ impatient_square <- function(x) {
 }
 ```
 
-=======
->>>>>>> master
 ```{r return-quiz, echo = FALSE}
 quiz(
   question("Which value will `impatient_square(2)` return?",
@@ -1351,8 +1344,6 @@ stat_ops <- function(x) {
   # mutate(descriptive_stats = map(flips, stat_ops))
 ```
 
-=======
->>>>>>> master
 ## Submit
 
 ```{r encode, echo=FALSE}
