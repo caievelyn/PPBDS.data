@@ -1338,10 +1338,9 @@ stat_ops <- function(x) {
 }
 ```
 
-
 ```{r coin8-hint}
-x %>%
-  mutate(descriptive_stats = map(flips, stat_ops))
+#x %>%
+  # mutate(descriptive_stats = map(flips, stat_ops))
 ```
 
 ## Submit
