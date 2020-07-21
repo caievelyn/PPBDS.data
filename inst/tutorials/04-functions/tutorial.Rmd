@@ -22,7 +22,7 @@ library(gapminder)
 knitr::opts_chunk$set(echo = FALSE, message = FALSE)
 ```
 
-## Using map_* functions to create list columns
+## Introduction to Functions
 
 ```{r name, echo=FALSE}
 question_text(
@@ -33,6 +33,47 @@ question_text(
   allow_retry = TRUE
 )
 ```
+
+```{r firstquiz}
+quiz(
+  question("Select all that apply: Which of the following operations requires running a function in R?",
+           answer("Taking a log value", correct = TRUE),
+           answer("Fitting a linear model", correct = TRUE),
+           answer("Adding two numbers", correct = TRUE)),
+  question("Which of the following is not a part of a function?",
+         allow_retry = TRUE,
+         random_answer_order = TRUE,
+         answer("A name", correct = TRUE, message = "That's right, functions contain a code body, a set of formal arguments, and an environment, but not a name. They just happen to inherit a name from the object they are stored in."),
+         answer("A code body", message = "Functions do require a code body! You can inspect this part of the function by using the helper function body()."),
+         answer("A (potentially empty) set of formal arguments", message = "Functions do require formal arguments, even if they are empty! You can inspect this part of the function by using the helper function formals()."),
+         answer("An environment", message = "Functions do require an environment, which is a self-contained space to look up the values of any objects within it. You can inspect this part of the function by using the helper function environment().")),
+  question("Suppose you need to run the following code on 20 different objects, `sqrt(sum(x^2))`. Why would you not want to rewrite the code 20 times? (Check all that apply)",
+     answer("Retyping code takes time.", correct = TRUE),
+     answer("Typing the code 20 times creates 20 chances to make a typo.", correct = TRUE),
+     answer("If you need to change the code later, you'll need to change it in 20 different places.", correct = TRUE),
+     allow_retry = TRUE, 
+     type = "multiple", 
+     incorrect = "Did you check ALL that applied?",
+     correct = "Good job! You can avoid these outcomes by turning your code into a function. A good rule is to turn a piece of code into a function whenever you find yourself re-using the code more than three times."))
+```
+
+Find the code body of `foo`. Use the helper function `body()`.
+
+```{r foo, exercise = TRUE}
+```
+
+```{r foo-setup}
+foo <- function() {
+  a <- 10
+  a
+}
+```
+
+```{r foo-hint}
+body(...)
+```
+
+## Using map_* functions to create list columns
 
 <!-- EC: Insert one question about lists -->
 
@@ -65,8 +106,6 @@ quiz(caption = "Concept Check: Map functions and list-columns",
            answer("It means that you can specify additional arguments to be passed into the given function", correct = TRUE))
 )
 ```
-
-List-Columns
 
 ### 
 
@@ -201,47 +240,16 @@ quiz(
 
 ```{r builtinfunctions}
 quiz(
-  question("Select all that apply: Which of the following operations requires running a function in R?",
-           answer("Taking a log value", correct = TRUE),
-           answer("Fitting a linear model", correct = TRUE),
-           answer("Adding two numbers", correct = TRUE)),
-  question("Which of the following is not a part of a function?",
-         allow_retry = TRUE,
-         random_answer_order = TRUE,
-         answer("A name", correct = TRUE, message = "That's right, functions contain a code body, a set of formal arguments, and an environment, but not a name. They just happen to inherit a name from the object they are stored in."),
-         answer("A code body", message = "Functions do require a code body! You can inspect this part of the function by using the helper function body()."),
-         answer("A (potentially empty) set of formal arguments", message = "Functions do require formal arguments, even if they are empty! You can inspect this part of the function by using the helper function formals()."),
-         answer("An environment", message = "Functions do require an environment, which is a self-contained space to look up the values of any objects within it. You can inspect this part of the function by using the helper function environment().")),
   question("Which of these will run the `Sys.time` function?",
          answer("Sys.time"),
          answer("Sys.time()", correct = TRUE, 
          message = "The open and closed parentheses tell R to execute the code in the code body of the function stored in the object names Sys.time.")),
-  question("Suppose you need to run the following code on 20 different objects, `sqrt(sum(x^2))`. Why would you not want to rewrite the code 20 times? (Check all that apply)",
-     answer("Retyping code takes time.", correct = TRUE),
-     answer("Typing the code 20 times creates 20 chances to make a typo.", correct = TRUE),
-     answer("If you need to change the code later, you'll need to change it in 20 different places.", correct = TRUE),
-     allow_retry = TRUE, 
-     type = "multiple", 
-     incorrect = "Did you check ALL that applied?",
-     correct = "Good job! You can avoid these outcomes by turning your code into a function. A good rule is to turn a piece of code into a function whenever you find yourself re-using the code more than three times."),
   question("What is the first step of writing a function?",
          answer("Choose a name, then type <- function(){", message = "You shouldn't type function() until you have code that works with a real test case."),
          answer("Create a real R object (or set of objects)", correct = TRUE, message = "You can then use the object to test your code."),
          answer("Assign argument names to your function"),
          answer("Write a help page that describes how your function will work."),
          allow_retry = TRUE))
-```
-
-Find the code body of `foo`
-
-```{r foo, exercise = TRUE}
-```
-
-```{r foo-setup}
-foo <- function() {
-  a <- 10
-  a
-}
 ```
 
 ```{r foo-solution}
@@ -611,33 +619,6 @@ quiz(
           answer("[1] 2 3 with the names b c above the values", correct = TRUE, message = "Remember that `...` only captures _unmatched_ values. Now that `a` is a formal argument, `a = 1` will be matched to it, leaving `b = 2` and `c = 3` to be captured and passed on."),
          answer("An error."),
          allow_retry = TRUE))
-```
-
-### Environments
-
-Thanks to the previous tutorials, you can write and execute functions, but can you predict how a function will work? 
-
-To do that precisely, you need to know how R will look up the values of objects that appear in the function.
-
-Consider the code below, which defines and then calls the function `foo()`. With its last line, `foo()` returns the value of `z`, but what will the value be?
-
-```{r eval = FALSE}
-z <- 1
-foo <- function(z = 2) {
-  z <- 3
-  z
-}
-foo(z = 4)
-```
-
-```{r q1-environments, echo = FALSE}
-question("What will the value of `z` be?",
-         answer("`1`, because we define `z <- 1` before defining the function."),
-         answer("`2`, because `2` is the default value of the `z` argument."),
-         answer("`3`, because the function runs `z <- 3`", correct = TRUE, message = "R can look for the value of z in many places, so it is important to know where R will look and why."),
-         answer("`4`, because we define `z = 4` when we call the function."),
-         allow_retry = TRUE, 
-         incorrect = "Not Quite.")
 ```
 
 ## Formal Testing
