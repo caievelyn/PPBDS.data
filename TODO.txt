@@ -1,38 +1,30 @@
 # Next Meeting
 
-Number of names in household should only exist for neighborhood. Should be NA otherwise.
+Talk about Open Policing. Maybe San Antonia?
 
-Should I be concerned?
-
-* checking dependencies in R code ... NOTE
-Namespaces in Imports field not imported from:
-  ‘gapminder’ ‘ggthemes’ ‘gt’ ‘nycflights13’ ‘skimr’ ‘tidyverse’
-  ‘viridis’
-  All declared Imports should be used.
-Unexported objects imported by ':::' calls:
-  ‘learnr:::get_all_state_objects’
-  ‘learnr:::submissions_from_state_objects’
-  See the note in ?`:::` about the use of this operator.
-
+No more variable name changes. Need to steady state for the creation of tutorials. OK to add more variables.
 
 # Priorities
 
-Let's take a careful tour of the data we have and make sure it is all good and sensible (sort of). Take ownership! No blaming your predecessors! As part of this, learn about making test cases from [R Packages](https://r-pkgs.org/tests.html) and add at least one test case for each data set. (Be smart in making these. It is OK to have a test case which tests the number of rows in trains because trains will always have 115 rows. It would be bad (or maybe not?) to have a test case like that for cces since the number of rows for will change once we add next year's data to it.)
+* Add testcase for the tutorials. Learn about testthat. Maybe the test is a simple: Does this file knit or does it fail? If it fails then the test fails. --[Done]
 
-The definition of a "careful tour" is that you have looked at make_* for a data set, regenerated it, and added at least two test cases about it. You should certainly use any current stopifnot() as test cases and then remove them from the make_* files.
+* Upgrade R to 4.0.2 --[Done]
 
-* Clean up make_nes, make_nhanes for future you. --[Done]
+* Add yourself as contributor in DESCRIPTION --[Done]
 
 * Clean up `sps`. Which variables do we need? What do they show? What should they be called?
 
-* Use the Kieran Healy trick of calling skimr::skim() in the help page. E-mail him to thank him. --[Done]
+* Number of names in household should only exist for Neighborhoods. Should be NA otherwise. --[Done]
 
+* Let's take a careful tour of the data we have and make sure it is all good and sensible (sort of). Take ownership! No blaming your predecessors! As part of this, learn about making test cases from [R Packages](https://r-pkgs.org/tests.html) and add at least one test case for each data set. (Be smart in making these. It is OK to have a test case which tests the number of rows in trains because trains will always have 115 rows. It would be bad (or maybe not?) to have a test case like that for cces since the number of rows for will change once we add next year's data to it.) The definition of a "careful tour" is that you have looked at make_* for a data set, regenerated it, and added at least two test cases about it. You should certainly use any current stopifnot() as test cases and then remove them from the make_* files.
+
+* Investigate "Note: found 217 marked UTF-8 strings"
 
 * World Values
 
 http://www.worldvaluessurvey.org/wvs.jsp
 
-* https://twitter.com/kjhealy/status/1283474177148821504
+* See https://msberends.github.io/AMR for some ideas to improve website.
 
 
 ## Previous
@@ -43,7 +35,7 @@ Provide instruction in the lower part of this document about the release cycle. 
 
 * Called `nominate`. DW NOMINATE from VoteView project: https://www.voteview.com/data.
 
-* Investigate "found 2 marked UTF-8 strings"
+
 
 * article section
 
@@ -62,7 +54,7 @@ Provide instruction in the lower part of this document about the release cycle. 
 
   - Start using a release and development branch?
 
-  - Look nice themes or yaml option
+  - Look for nice themes or yaml options
 
   - Nicer graphics on home page.
 
@@ -72,8 +64,6 @@ Provide instruction in the lower part of this document about the release cycle. 
 
 
 ### Data Sets
-
-* Clean up qscores. Note the text misformating in course names. Semester should be something easier to read, like Fall-2018, Spring 2019.
 
 * Science experiment: https://science.sciencemag.org/content/358/6364/776/tab-figures-data
 
