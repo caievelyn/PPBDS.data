@@ -441,12 +441,8 @@ x <- c(100, 100, 100, 100, 100, 100, 100, 100, 100, 90)
 
 Use `sum()`, `min()`, `/`, `9` and parentheses to calculate the final grade for student `x`.
 
-```{r make-x, echo = FALSE}
+```{r norm, exercise=TRUE}
 x <- c(100, 100, 100, 100, 100, 100, 100, 100, 100, 90)
-```
-
-```{r norm, exercise=TRUE, setup = "make-x"}
-x
 ```
 
 ```{r norm-hint, eval=FALSE}
@@ -536,8 +532,8 @@ question("Do you have a test vector that you can use?",
 
 Write a piece of code that uses `max()` to double count the highest score in `x` and then takes the average of the 11 results.
 
-```{r e3, exercise=TRUE, exercise.setup = "make-x"}
-x
+```{r e3, exercise=TRUE}
+x <- c(100, 100, 100, 100, 100, 100, 100, 100, 100, 90)
 ```
 
 ```{r e3-hint, eval=FALSE}
@@ -941,8 +937,20 @@ quiz(
            allow_retry = TRUE))
 ```
 
-```{r mysteryfunc2-setup, exercise.setup = "mysteryfunc-setup"}
-
+```{r mysteryfunc2-setup}
+library(testthat)
+mystery <- function(x = 15) {
+  if (!is.numeric(x)){
+    stop("x must be a number.")
+  }
+  if (x <= 10){
+    stop("x must be greater than 10.")
+  }
+  if (x == 13){
+    stop("13 is an unlucky number. Choose a different number.")
+  }
+  sqrt(x)
+}
 ```
 
 ```{r mysteryfunc2, exercise=TRUE, eval=FALSE}
