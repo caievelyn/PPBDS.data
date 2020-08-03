@@ -431,6 +431,7 @@ Create an object named `x` that contains the vector `c(100, 100, 100, 100, 100, 
 *`x` will be the grades of your test student. 
 
 ```{r obj, exercise=TRUE}
+
 ```
 
 ```{r obj-solution}
@@ -491,6 +492,7 @@ grade <- function(x) {
 ```
 
 ```{r make-grade, exercise=TRUE}
+
 ```
 
 ```{r make-grade-hint, eval=FALSE}
