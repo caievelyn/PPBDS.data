@@ -14,9 +14,9 @@ submission_server(input, output)
 submission_ui
 }
 \arguments{
-\item{input}{unused}
+\item{input}{User interactions upon clicking a button}
 
-\item{output}{unused}
+\item{output}{Generating a hash and downloading an .rds of the hashed responses}
 }
 \description{
 The following function was modified from Colin Rundel's learnrhash package,
