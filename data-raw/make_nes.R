@@ -272,7 +272,7 @@ z <- x %>%
   select(-VCF0102, -VCF0450) %>%
 
   select(year, state, gender, income, age,
-         education, race, ideology, pres_appr, voted)
+         education, race, ideology, pres_appr, voted, region)
 
 
 # Check and save.
@@ -280,7 +280,7 @@ z <- x %>%
 stopifnot(nrow(z) > 32000)
 stopifnot(length(levels(z$education)) == 7)
 stopifnot(is.integer(z$year))
-stopifnot(ncol(z) == 10)
+stopifnot(ncol(z) == 11)
 stopifnot(dim(table(z$income)) == 5)
 
 
