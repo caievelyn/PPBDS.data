@@ -34,12 +34,12 @@ x <- data %>%
   # Picking relevant variables: gender, income, year,
   # race, party identification, education, state FIPS
   # code, voted in national elections?, age group,
-  # incumbent president's approval.
+  # incumbent president's approval, region
 
   select(VCF0104, VCF0114, VCF0004,
          VCF0105a, VCF0301, VCF0140a,
          VCF0901a, VCF0702, VCF0102,
-         VCF0450) %>%
+         VCF0450, VCF0112) %>%
 
 
   # Renaming and cleaning gender variable.
@@ -194,7 +194,18 @@ x <- data %>%
 
   # Dropping leftover state variable.
 
-  select(-VCF0901a)
+  select(-VCF0901a) %>%
+
+  # Cleaning/renaming region variable
+
+  mutate(region = as.factor(case_when(VCF0112 == 1 ~ "Northeast",
+                                      VCF0112 == 2 ~ "Midwest",
+                                      VCF0112 == 3 ~ "South",
+                                      VCF0112 == 4 ~ "West"))) %>%
+
+  # Dropping leftover region variable
+
+  select(-VCF0112)
 
 
 # Created a file with all fips codes and state abbreviations, based on info
