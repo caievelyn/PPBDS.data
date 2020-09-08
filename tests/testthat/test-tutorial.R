@@ -33,7 +33,6 @@
 # that, when a student presses the "Run Document" button, things will work. I am
 # not sure if render() is the same thing.
 
-
 context("Tutorials")
 library(PPBDS.data)
 library(fs)
@@ -44,6 +43,13 @@ files <- dir_ls(base, recurse = TRUE, regexp = "tutorial.Rmd") %>%
             path_abs()
 
 stopifnot(length(files) > 3)
+
+# You can choose to run just a few of the portfolios through by selecting a
+# subset of files, like `files <- files[c(2)]` or `files <- files[c(1, 3:9)]`.
+# But I am not sure if that really works. For example, it seems like I could get
+# just file 2 to work or just all the other files to work but 2. Yet, whenever I
+# did them all, I got errors (all from within file 2). Not sure what to make of
+# this, other than that perhaps I should explore the new version of testthat.
 
 for(i in files){
   test_that(paste("rendering", i), {

@@ -1,11 +1,13 @@
 ---
-title: "Sampling"
+title: "Two Parameters"
+tutorial:
+  id: "07-two-parameters"
 output:
   learnr::tutorial:
       progressive: true
       allow_skip: true
 runtime: shiny_prerendered
-description: "Chapter 6 tutorial"
+description: "Chapter 7 tutorial"
 ---
 
 ```{r setup, include=FALSE}
@@ -14,6 +16,7 @@ library(PPBDS.data)
 library(learnr)
 library(shiny)
 knitr::opts_chunk$set(echo = FALSE, message = FALSE)
+options(tutorial.storage="local")  
 ```
 
 ## Name
