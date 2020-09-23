@@ -3,23 +3,7 @@ title: "Instructions for Writing Tutorials"
 output: html_document
 ---
 
-<!-- TO-DO: -->
 
-<!-- We need tutorials about using Git, using the command line and other non-R stuff. Maybe make it a separate Tools tutorial? Could have lots of questions like: "Type this in at the Terminal command line and paste whatever comes back here:"-->
-
-<!-- Can we show "answers" to a Tutorial after students have submitted it? How? -->
-
-<!-- Can we give students a search box in the tutorial so that they can find answers to questions they have already done? -->
-
-<!-- Any easy way to break tutorials into 2 or 3 subparts, so students aren't overwhelmed? -->
-
-<!-- Improve this guide to show actual questions and actual solutions. -->
-
-<!-- Individual tutorials should not be too long. In particular, Visualization and Wrangling should each be split into several parts, maybe 3 or so. -->
-
-<!-- Any ideas why students are losing work? -->
-
-<!-- Code for processing a bunch of answers. -->
 
 
 
@@ -341,12 +325,17 @@ You may also include other packages which your tutorial makes use of, but the fi
 * The first question should require that students give us their name. This way, when we generate a hash of a student's responses, their name is included in the hash and copy-pasting another student's hash is made impractical.
 
 ````rmarkdown
-``` {r name, echo=FALSE}
-question_text("Student Name:",
-              answer(NULL, correct = TRUE),
-              incorrect = "Ok",
-              try_again_button = "Modify your answer",
-              allow_retry = TRUE)
+## Name 
+###
+
+``` {r name}
+question_text(
+  "Student Name:",
+  answer(NULL, correct = TRUE),
+  allow_retry = TRUE,
+  try_again_button = "Modify your answer",
+  incorrect = "Ok"
+)
 ```
 ````
 
